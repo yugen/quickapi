@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"[python]": {
+			"gitlens.codeLens.symbolScopes": [
+				"!Module"
+			]
+		},
+		"python.pythonPath": "/Users/yugen/.local/share/virtualenvs/quick-api-ySaWVVOY/bin/python"
+	}
+}
