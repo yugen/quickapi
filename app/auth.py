@@ -11,9 +11,9 @@ from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 
-from app.models import User, UserInDB, Token, TokenData
-from app.db import fake_users_db
-from app.config import GITHUB_CLIENT_ID, \
+from models import User, UserInDB, Token, TokenData
+from db import fake_users_db
+from config import GITHUB_CLIENT_ID, \
                         GITHUB_CLIENT_SECRET, \
                         SECRET_KEY, \
                         ALGORITHM, \
@@ -21,7 +21,7 @@ from app.config import GITHUB_CLIENT_ID, \
                         ORCID_CLIENT_ID, \
                         ORCID_CLIENT_SECRET, \
                         BASE_URL
-import app.password
+import password
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
