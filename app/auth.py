@@ -159,8 +159,8 @@ async def orcid_login():
     params = {
         "client_id": ORCID_CLIENT_ID,
         "response_type": "code",
-        "scope": "/read-public",
-        # "scope": "/authenticate",
+        # "scope": "/read-public",
+        "scope": "/authenticate",
         "redirect_uri": BASE_URL+'orcid-callback'
     }
 
