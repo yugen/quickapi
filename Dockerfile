@@ -11,7 +11,7 @@ RUN pip install pipenv
 ENV PORT=8080
 ENV PROJECT_DIR=/app
 
-WORKDIR ${PROJECT_DIR}
+# WORKDIR ${PROJECT_DIR}
 
 COPY ./Pipfile ./Pipfile.lock ${PROJECT_DIR}/
 

@@ -14,4 +14,4 @@ services:
             # - redis:redis
         command: /start-reload.sh
         volumes:
-            - .:/app
+            - ./app:/app
