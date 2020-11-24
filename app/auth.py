@@ -7,16 +7,21 @@ from typing import Optional
 
 import requests
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 
 from app.models import User, UserInDB, Token, TokenData
 from app.db import fake_users_db
-from app.config import GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.config import GITHUB_CLIENT_ID, \
+                        GITHUB_CLIENT_SECRET, \
+                        SECRET_KEY, \
+                        ALGORITHM, \
+                        ACCESS_TOKEN_EXPIRE_MINUTES, \
+                        ORCID_CLIENT_ID, \
+                        ORCID_CLIENT_SECRET, \
+                        BASE_URL
 import app.password
-
-
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -103,13 +108,17 @@ async def read_users_me(current_user: User = Depends(get_current_active_user)):
     return current_user
     
 
+@router.get('/login')
+async def login_links():
+    return HTMLResponse('<html><body><ul><li><a href="/github-login">Login w/ github</a></li><li><a href="/orcid-login">Login w/ orcid</a></li></ul></body></html>')
+
 @router.get('/github-login')
-async def oauth_login():
+async def github_login():
 
     urlBase = 'https://github.com/login/oauth/authorize?'
     params = {
         "client_id": GITHUB_CLIENT_ID,
-        "redirect_uri": "http://quickapi-jward3.cloudapps.unc.edu/oauth-callback",
+        "redirect_uri": BASE_URL+"oauth-callback",
         "scope": "user",
         "state": app.password.hash('farts')
     }
@@ -120,7 +129,7 @@ async def oauth_login():
 
 @router.post('/oauth-callback')
 # not async b/c requests doesn't do async (https://github.com/tiangolo/astapi/issues/12#issuecomment-457706256)
-def oauth_callback(code: str, state: str):
+def github_callback(code: str, state: str):
     urlBase = 'https://github.com/login/oauth/access_token'
     params = {
         "client_id": GITHUB_CLIENT_ID,
@@ -144,6 +153,42 @@ def oauth_callback(code: str, state: str):
     return apiRsp.json()
 
 
+@router.get('/orcid-login')
+async def orcid_login():
+    urlBase = 'https://orcid.org/oauth/authorize?'
+    params = {
+        "client_id": ORCID_CLIENT_ID,
+        "response_type": "code",
+        # "scope": "/read-public",
+        "scope": "/authenticate",
+        "redirect_uri": BASE_URL+'orcid-callback'
+    }
+
+    return RedirectResponse(urlBase+urllib.parse.urlencode(params))
+
+
+# @router.post('/orcid-callback')
+@router.get('/orcid-callback')
+# not async b/c requests doesn't do async (https://github.com/tiangolo/astapi/issues/12#issuecomment-457706256)
+def orcid_callback(code: str):
+    urlBase = 'https://orcid.org/oauth/token'
+    params = {
+        "client_id": ORCID_CLIENT_ID,
+        "client_secret": ORCID_CLIENT_SECRET,
+        "grant_type": 'authorization_code',
+        "code": code
+    }
+
+    rsp = requests.post(urlBase, data=params)
+
+    access_token = rsp.json()
+    return access_token
+    
+
+    api_headers = {'Authorization': 'token '+access_token}
+    apiRsp = requests.get('https://api.github.com/user', headers=api_headers)
+
+    return apiRsp.json()
 
     
 
