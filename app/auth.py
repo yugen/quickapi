@@ -11,9 +11,9 @@ from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 
-from models import User, UserInDB, Token, TokenData
-from db import fake_users_db
-from config import GITHUB_CLIENT_ID, \
+from .models import User, UserInDB, Token, TokenData
+from .db import fake_users_db
+from .config import GITHUB_CLIENT_ID, \
                         GITHUB_CLIENT_SECRET, \
                         SECRET_KEY, \
                         ALGORITHM, \
@@ -21,7 +21,7 @@ from config import GITHUB_CLIENT_ID, \
                         ORCID_CLIENT_ID, \
                         ORCID_CLIENT_SECRET, \
                         BASE_URL
-import password
+from . import password
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -159,8 +159,8 @@ async def orcid_login():
     params = {
         "client_id": ORCID_CLIENT_ID,
         "response_type": "code",
-        # "scope": "/read-public",
-        "scope": "/authenticate",
+        "scope": "/read-public",
+        # "scope": "/authenticate",
         "redirect_uri": BASE_URL+'orcid-callback'
     }
 
