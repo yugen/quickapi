@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 fastapi = "*"
+python-multipart = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
+passlib = {extras = ["bcrypt"], version = "*"}
+python-dotenv = "*"
+requests = "*"
 
 [dev-packages]
 
