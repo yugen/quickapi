@@ -16,4 +16,4 @@ async def root():
 async def secured_endpoint(token: str = Depends(oauth2_scheme)):
     return {'message': "You got in with the token"}
 
-app.include_router(auth.router, tags=["auth"])
+# app.include_router(auth.router, tags=["auth"])
