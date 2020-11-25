@@ -188,13 +188,17 @@ def orcid_callback(code: str):
     if not access_token:
         raise PermissionError('Failed to authenticate.  No access token in response')
     
+    logging.debug('testing debug: getting record_dict');
+    logging.info('testing info: getting record_dict');
+    logging.warning('testing warning: getting record_dict');
+    logging.error('testing error: getting record_dict');
     record_dict = fetch_public_orcid_record(access_token, orcid_id)
 
     return {"auth": auth_dict, "record": record_dict}
 
 def fetch_public_orcid_record(access_token: str, orcid_id: str):
-    logging.debug('param access_token: '+access_token)
-    logging.debug('param orchid_id: '+orcid_id)
+    logging.warning('param access_token: '+access_token)
+    logging.warning('param orchid_id: '+orcid_id)
 
     api_headers = {
         'Authorization type': 'bearer',
@@ -202,8 +206,8 @@ def fetch_public_orcid_record(access_token: str, orcid_id: str):
     }
     record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
 
-    logging.debug('record_url:'+record_url)
-    logging.debug('access_token:'+access_token)
+    logging.warning('record_url:'+record_url)
+    logging.warning('access_token:'+access_token)
     
     rcd_rsp = requests.get(record_url, headers=api_headers)
     if rcd_rsp.status_code != 200:
