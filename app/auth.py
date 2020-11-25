@@ -195,13 +195,13 @@ def orcid_callback(code: str):
     }
     record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
     rcd_rsp = requests.get(record_url, headers=api_headers)
-    if rcd_rsp.status_code not 200:
+    if rcd_rsp.status_code != 200:
         logging.error(rcd_rsp)
         return {'message': 'got response '+rcd_rsp.status_code}
 
     try:
         record_dict = rcd_rsp.json()
-    except Error e:
+    except Error as e:
         logging.error(e)
         return rcd_rsp.text
 
