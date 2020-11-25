@@ -182,6 +182,9 @@ def orcid_callback(code: str):
     rsp = requests.post(urlBase, data=params)
 
     auth_dict = rsp.json()
+
+    return auth_dict
+
     access_token = auth_dict.get('access_token')
     orcid_id = auth_dict.get('orcid')
     if not access_token:
@@ -194,9 +197,14 @@ def orcid_callback(code: str):
     }
     record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
     rcd_rsp = requests.get(record_url, headers=api_headers)
-    record_dict = rcd_rsp.json()
+    if rcd_rsp.status_code not 200:
+        raise 
 
-
+    try:
+        record_dict = rcd_rsp.json()
+    except Error e:
+        logging.error(e)
+        return rcd_rsp
 
     return {"auth": auth_dict, "record": record_dict}
 
