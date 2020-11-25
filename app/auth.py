@@ -188,7 +188,11 @@ def orcid_callback(code: str):
     if not access_token:
         raise PermissionError('Failed to authenticate.  No access token in response')
     
+    record_dict = fetch_public_orcid_record(access_token, orcid_id)
 
+    return {"auth": auth_dict, "record": record_dict}
+
+def fetch_public_orcid_record(access_token: str, orcid_id: str):
     api_headers = {
         'Authorization type': 'bearer',
         'Access token': access_token,
@@ -203,6 +207,4 @@ def orcid_callback(code: str):
         record_dict = rcd_rsp.json()
     except Error as e:
         logging.error(e)
-        return rcd_rsp.text
-
-    return {"auth": auth_dict, "record": record_dict}
+        return {'rcd_rsp.text': rcd_rsp.text}

@@ -14,7 +14,7 @@ RUN pip install pipenv
 ENV PORT=8080
 ENV PROJECT_DIR=/app
 
-# WORKDIR ${PROJECT_DIR}
+EXPOSE 8080
 
 COPY ./Pipfile ./Pipfile.lock ${PROJECT_DIR}/
 
@@ -22,6 +22,7 @@ RUN pipenv install --system --deploy
 
 COPY ./app /app
 
-EXPOSE 8080
+RUN chgrp -R 0 /app \
+    && chmod -R g+w /app
 
 USER 1001
