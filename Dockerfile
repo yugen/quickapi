@@ -7,6 +7,9 @@ LABEL maintainer="TJ Ward" \
     io.k8s.display-name="gene-tracker version 1" \
     io.openshift.tags="php,apache"
 
+RUN apt-get -yqq update \
+    && apt-get -yqq install --no-install-recommends vim
+
 RUN pip install pipenv
 ENV PORT=8080
 ENV PROJECT_DIR=/app

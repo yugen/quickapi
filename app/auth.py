@@ -185,30 +185,25 @@ def orcid_callback(code: str):
 
     return auth_dict
 
-    access_token = auth_dict.get('access_token')
-    orcid_id = auth_dict.get('orcid')
-    if not access_token:
-        raise PermissionError('Failed to authenticate.  No access token in response')
+    # access_token = auth_dict.get('access_token')
+    # orcid_id = auth_dict.get('orcid')
+    # if not access_token:
+    #     raise PermissionError('Failed to authenticate.  No access token in response')
     
 
-    api_headers = {
-        'Authorization type': 'bearer',
-        'Access token': access_token,
-    }
-    record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
-    rcd_rsp = requests.get(record_url, headers=api_headers)
-    if rcd_rsp.status_code not 200:
-        raise 
+    # api_headers = {
+    #     'Authorization type': 'bearer',
+    #     'Access token': access_token,
+    # }
+    # record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
+    # rcd_rsp = requests.get(record_url, headers=api_headers)
+    # if rcd_rsp.status_code not 200:
+    #     raise 
 
-    try:
-        record_dict = rcd_rsp.json()
-    except Error e:
-        logging.error(e)
-        return rcd_rsp
+    # try:
+    #     record_dict = rcd_rsp.json()
+    # except Error e:
+    #     logging.error(e)
+    #     return rcd_rsp
 
-    return {"auth": auth_dict, "record": record_dict}
-
-    
-
-    
-    
+    # return {"auth": auth_dict, "record": record_dict}
