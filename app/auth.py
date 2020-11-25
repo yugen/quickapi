@@ -168,7 +168,7 @@ async def orcid_login():
 
 
 # @router.post('/orcid-callback')
-@router.post('/orcid-callback')
+@router.get('/orcid-callback')
 # not async b/c requests doesn't do async (https://github.com/tiangolo/astapi/issues/12#issuecomment-457706256)
 def orcid_callback(code: str):
     urlBase = 'https://orcid.org/oauth/token'
@@ -198,6 +198,10 @@ def fetch_public_orcid_record(access_token: str, orcid_id: str):
         'Access token': access_token,
     }
     record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
+
+    logging.info('record_url:'+record_url)
+    logging.info('access_token:'+access_token)
+    
     rcd_rsp = requests.get(record_url, headers=api_headers)
     if rcd_rsp.status_code != 200:
         logging.error(rcd_rsp)
