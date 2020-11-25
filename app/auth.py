@@ -216,6 +216,6 @@ def fetch_public_orcid_record(access_token: str, orcid_id: str):
 
     try:
         record_dict = rcd_rsp.json()
-    except Error as e:
+    except BaseException as e:
         logging.error(e)
         return {'rcd_rsp.text': rcd_rsp.text}
