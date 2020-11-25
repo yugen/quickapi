@@ -9,7 +9,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @app.get('/')
 async def root():
-    return {"message": "**A quick API example"}
+    return {"message": "A quick API example"}
 
 
 @app.get('/secured-endpoint')
