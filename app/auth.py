@@ -204,7 +204,7 @@ def fetch_public_orcid_record(access_token: str, orcid_id: str):
         'Authorization type': 'bearer',
         'Access token': access_token,
     }
-    record_url = 'https://api.orcid.org/v2.1/%s/record' % orcid_id
+    record_url = 'https://pub.orcid.org/v2.1/%s/record' % orcid_id
 
     logging.warning('record_url:'+record_url)
     logging.warning('access_token:'+access_token)
