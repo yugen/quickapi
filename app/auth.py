@@ -197,7 +197,7 @@ def orcid_callback(code: str):
     rcd_rsp = requests.get(record_url, headers=api_headers)
     if rcd_rsp.status_code != 200:
         logging.error(rcd_rsp)
-        return {'message': 'got response '+rcd_rsp.status_code}
+        return {'message': 'got response '+str(rcd_rsp.status_code)+' with message: '+rcd_rsp.text()}
 
     try:
         record_dict = rcd_rsp.json()
