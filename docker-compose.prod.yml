@@ -1,0 +1,14 @@
+version: "3"
+services: 
+    app:
+        build: .
+        image: quickapi
+        container_name: quick-api-app
+        # depends_on:
+            # - database
+            # - redis
+        ports:
+            - "8080:8080"
+        # links:
+            # - database:database
+            # - redis:redis
