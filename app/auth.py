@@ -168,7 +168,7 @@ async def orcid_login():
 
 
 # @router.post('/orcid-callback')
-@router.get('/orcid-callback')
+@router.post('/orcid-callback')
 # not async b/c requests doesn't do async (https://github.com/tiangolo/astapi/issues/12#issuecomment-457706256)
 def orcid_callback(code: str):
     urlBase = 'https://orcid.org/oauth/token'
