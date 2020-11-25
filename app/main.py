@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, APIRouter
+from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordBearer
 
 import auth
@@ -9,7 +10,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @app.get('/')
 async def root():
-    return {"message": "A quick API example"}
+    return RedirectResponse('/login')
 
 
 @app.get('/secured-endpoint')

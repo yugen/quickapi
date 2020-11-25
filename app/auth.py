@@ -194,7 +194,7 @@ def orcid_callback(code: str):
     logging.error('testing error: getting record_dict');
     record_dict = fetch_public_orcid_record(access_token, orcid_id)
 
-    return {"auth": auth_dict, "record": record_dict}
+    return {"orcid_id": orcid_id, "authenticated": True}
 
 def fetch_public_orcid_record(access_token: str, orcid_id: str):
     logging.warning('param access_token: '+access_token)
@@ -210,12 +210,14 @@ def fetch_public_orcid_record(access_token: str, orcid_id: str):
     logging.warning('access_token:'+access_token)
     
     rcd_rsp = requests.get(record_url, headers=api_headers)
+
     if rcd_rsp.status_code != 200:
         logging.error(rcd_rsp)
         return {'message': 'got response '+str(rcd_rsp.status_code)+' with message: '+rcd_rsp.text}
 
     try:
-        record_dict = rcd_rsp.json()
+        record_dict = rcd_rsp.text
+        return record_dict
     except BaseException as e:
         logging.error(e)
         return {'rcd_rsp.text': rcd_rsp.text}
