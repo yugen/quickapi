@@ -181,14 +181,24 @@ def orcid_callback(code: str):
 
     rsp = requests.post(urlBase, data=params)
 
-    access_token = rsp.json()
-    return access_token
+    auth_dict = rsp.json()
+    access_token = auth_dict.get('access_token')
+    orcid_id = auth_dict.get('orcid')
+    if not access_token:
+        raise PermissionError('Failed to authenticate.  No access token in response')
     
 
-    api_headers = {'Authorization': 'token '+access_token}
-    apiRsp = requests.get('https://api.github.com/user', headers=api_headers)
+    api_headers = {
+        'Authorization type': 'bearer',
+        'Access token': access_token,
+    }
+    record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
+    rcd_rsp = requests.get(record_url, headers=api_headers)
+    record_dict = rcd_rsp.json()
 
-    return apiRsp.json()
+
+
+    return {"auth": auth_dict, "record": record_dict}
 
     
 
