@@ -193,14 +193,17 @@ def orcid_callback(code: str):
     return {"auth": auth_dict, "record": record_dict}
 
 def fetch_public_orcid_record(access_token: str, orcid_id: str):
+    logging.debug('param access_token: '+access_token)
+    logging.debug('param orchid_id: '+orcid_id)
+
     api_headers = {
         'Authorization type': 'bearer',
         'Access token': access_token,
     }
     record_url = 'https://api.sandbox.orcid.org/v2.1/%s/record' % orcid_id
 
-    logging.info('record_url:'+record_url)
-    logging.info('access_token:'+access_token)
+    logging.debug('record_url:'+record_url)
+    logging.debug('access_token:'+access_token)
     
     rcd_rsp = requests.get(record_url, headers=api_headers)
     if rcd_rsp.status_code != 200:
