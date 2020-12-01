@@ -10,6 +10,9 @@ python-jose = {extras = ["cryptography"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
 python-dotenv = "*"
 requests = "*"
+sqlalchemy = "*"
+pymysql = "*"
+alembic = "*"
 
 [dev-packages]
 

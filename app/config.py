@@ -17,3 +17,14 @@ GITHUB_OAUTH_PERSONAL_ACCESS_TOKEN = os.getenv('GITHUB_OAUTH_PERSONAL_ACCESS_TOK
 
 ORCID_CLIENT_ID = os.getenv('ORCID_CLIENT_ID')
 ORCID_CLIENT_SECRET = os.getenv('ORCID_CLIENT_SECRET')
+
+# DATABASE CONFIG
+DB_DRIVER = os.getenv('DB_DRIVER') or 'pymysql'
+DB_TYPE = os.getenv('DB_TYPE') or 'mysql'
+DB_HOST = os.getenv('DB_HOST') or 'databse'
+DB_PORT = os.getenv('DB_PORT') or '3306'
+DB_DATABASE = os.getenv('DB_DATABASE') or 'quickapi'
+DB_USERNAME = os.getenv('DB_USERNAME') or 'quickapi'
+DB_PASSWORD = os.getenv('DB_PASSWORD') or 'NONE'
+
+SQL_ALCHEMY_URL = DB_TYPE+'+'+DB_DRIVER+'://'+DB_USERNAME+':'+DB_PASSWORD+'@'+DB_HOST+'/'+DB_DATABASE
